@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+
+  "name": "CodeMent",
+
+  "version": "1.0",
+
+  "description": "DSA mentor for LeetCode",
+
+  "permissions":[
+    "activeTab",
+    "storage",
+     "tabs"
+    ],
+
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+
+  "content_scripts": [
+
+    {
+      "matches": [
+        "https://leetcode.com/problems/*"
+      ],
+
+      "js": [
+        "content.js"
+      ]
+    }
+
+  ]
+
+}
