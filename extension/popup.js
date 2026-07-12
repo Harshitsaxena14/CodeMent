@@ -1,122 +1,191 @@
-const problemEl = document.getElementById("problem");
-const patternEl = document.getElementById("pattern");
-const difficultyEl = document.getElementById("difficulty");
+// DOM Elements
+const loaderState = document.getElementById("loaderState");
+const activeState = document.getElementById("activeState");
+const emptyState = document.getElementById("emptyState");
+
+const problemTitle = document.getElementById("problemTitle");
+const difficultyBadge = document.getElementById("difficultyBadge");
+const topicValue = document.getElementById("topicValue");
+const patternValue = document.getElementById("patternValue");
+
 const openBtn = document.getElementById("openBtn");
+const askBtn = document.getElementById("askBtn");
 
 let currentProblemSlug = null;
 let currentTopicId = null;
 
-function renderNotAvailable(slug) {
-  problemEl.innerText = `Problem detected: ${slug}`;
-  patternEl.innerText = "-";
-  difficultyEl.innerText = "Not available in CodeMent database yet";
+// Extractor Helper
+function extractProblemSlugFromPathname(pathname) {
+  if (!pathname) return null;
+  const parts = String(pathname).split("/");
+  const problemIndex = parts.indexOf("problems");
+  if (problemIndex !== -1 && parts[problemIndex + 1]) {
+    return parts[problemIndex + 1];
+  }
+  return null;
 }
 
-async function loadProblemFromBackend(slug) {
+// Set up UI views
+function showState(state) {
+  loaderState.classList.add("hidden");
+  activeState.classList.add("hidden");
+  emptyState.classList.add("hidden");
+
+  if (state === "loading") {
+    loaderState.classList.remove("hidden");
+    openBtn.disabled = true;
+    askBtn.disabled = true;
+  } else if (state === "active") {
+    activeState.classList.remove("hidden");
+    openBtn.disabled = false;
+    askBtn.disabled = false;
+  } else if (state === "empty") {
+    emptyState.classList.remove("hidden");
+    openBtn.disabled = true;
+    askBtn.disabled = true;
+  }
+}
+
+// Fetch problem data from backend
+async function fetchProblemFromBackend(slug) {
   try {
-    // Note: backend route expected: GET /api/problems/:slug
     const res = await fetch(`http://localhost:5000/api/problems/${encodeURIComponent(slug)}`);
-
-    // If backend returns 404 or any non-OK response, treat as missing.
     if (!res.ok) return null;
-
     const data = await res.json();
-
-    // Expected future shape:
-    // { title, difficulty, topics, patterns, topicId }
     if (!data || !data.title) return null;
-
-    const patterns = Array.isArray(data.patterns) ? data.patterns : (data.patterns ? [data.patterns] : []);
-    const topics = Array.isArray(data.topics) ? data.topics : (data.topics ? [data.topics] : []);
-
-    problemEl.innerText = data.title;
-    difficultyEl.innerText = data.difficulty || "-";
-
-    // Display pattern/topic. Prefer patterns; fallback to topics.
-    const display = patterns.length ? patterns.join(", ") : (topics.length ? topics.join(", ") : "-");
-    patternEl.innerText = display;
-
-    currentTopicId = data.topicId ?? null;
-    return data;
-  } catch (e) {
+    return {
+      title: data.title,
+      difficulty: data.difficulty || "Easy",
+      pattern: Array.isArray(data.patterns) ? data.patterns.join(", ") : (data.patterns || "-"),
+      topicName: Array.isArray(data.topics) ? data.topics.join(", ") : (data.topics || "-"),
+      topicId: data.topicId || null
+    };
+  } catch (error) {
     return null;
   }
 }
 
-async function sendProgress(){
+// Format difficulty badge style
+function formatDifficultyBadge(difficulty) {
+  difficultyBadge.innerText = difficulty;
+  difficultyBadge.className = "badge"; // Reset
 
- const data =
- await chrome.storage.local.get([
-  "problem",
-  "timeSpent",
-  "token"
- ]);
-
- await fetch(
- "http://localhost:5000/api/progress/track",
- {
-  method:"POST",
-
-  headers:{
-   "Content-Type":"application/json",
-   Authorization:
-   `Bearer ${data.token}`
-  },
-
-  body:JSON.stringify({
-
-   slug:data.problem,
-
-   status:"attempted",
-
-   timeSpent:data.timeSpent
-
-  })
- }
- );
-
+  const diffLower = String(difficulty).toLowerCase();
+  if (diffLower === "easy") {
+    difficultyBadge.classList.add("easy");
+  } else if (diffLower === "medium") {
+    difficultyBadge.classList.add("medium");
+  } else if (diffLower === "hard") {
+    difficultyBadge.classList.add("hard");
+  } else {
+    difficultyBadge.classList.add("easy");
+  }
 }
-// Get problem slug from storage
-chrome.storage.local.get(["problemSlug"], async (data) => {
-  const problemSlug = data.problemSlug;
-  currentProblemSlug = problemSlug;
 
-  if (!problemSlug) {
-    renderNotAvailable("unknown");
-    return;
+// Process and load problem details
+async function processProblem(slug) {
+  currentProblemSlug = slug;
+  showState("loading");
+
+  // 1. Try Backend fetch
+  let problemData = await fetchProblemFromBackend(slug);
+
+  // 2. Try Offline database fallback (problems.js)
+  if (!problemData && typeof problems !== "undefined" && problems[slug]) {
+    const offlineProb = problems[slug];
+    problemData = {
+      title: offlineProb.title,
+      difficulty: offlineProb.difficulty,
+      pattern: offlineProb.pattern || "-",
+      topicName: offlineProb.topicName || "Roadmap Node",
+      topicId: offlineProb.topicId || null
+    };
   }
 
-  // Loading state
-  problemEl.innerText = "Loading...";
-  patternEl.innerText = "Loading...";
-  difficultyEl.innerText = "Loading...";
+  // 3. Render State
+  if (problemData) {
+    problemTitle.innerText = problemData.title;
+    formatDifficultyBadge(problemData.difficulty);
+    topicValue.innerText = problemData.topicName;
+    patternValue.innerText = problemData.pattern;
+    currentTopicId = problemData.topicId;
 
-  const result = await loadProblemFromBackend(problemSlug);
-  if (!result) {
-    renderNotAvailable(problemSlug);
+    showState("active");
+  } else {
+    // Problem unlisted in database, but still extracted
+    const formattedTitle = slug
+      .split("-")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+
+    problemTitle.innerText = formattedTitle;
+    formatDifficultyBadge("Medium");
+    topicValue.innerText = "Unassigned Topic";
+    patternValue.innerText = "General DSA Pattern";
+    currentTopicId = null;
+
+    showState("active");
   }
-});
+}
 
-// Button click (open CodeMent website)
+// Main initialization flow
+function initialize() {
+  showState("loading");
+
+  // Query active tab first (Direct tab checking solves race conditions)
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+    if (activeTab && activeTab.url) {
+      try {
+        const url = new URL(activeTab.url);
+        if (url.hostname.includes("leetcode.com")) {
+          const slug = extractProblemSlugFromPathname(url.pathname);
+          if (slug) {
+            processProblem(slug);
+            // Save to sync storage
+            chrome.storage.local.set({ problemSlug: slug });
+            return;
+          }
+        }
+      } catch (e) {
+        console.error("Popup URL parsing logic error:", e);
+      }
+    }
+
+    // Fallback to storage in case tab query isn't LeetCode or tab active check failed
+    chrome.storage.local.get(["problemSlug"], (data) => {
+      if (data && data.problemSlug) {
+        processProblem(data.problemSlug);
+      } else {
+        showState("empty");
+      }
+    });
+  });
+}
+
+// Button Click Event Handlers
 if (openBtn) {
   openBtn.onclick = () => {
-    // Keep original navigation style; but only if we have topicId.
-    // If topicId is missing (backend not ready), we still allow opening roadmap generically.
-    if (currentTopicId && currentProblemSlug) {
-      chrome.tabs.create({
-        url:
-          "http://localhost:5176/roadmap/" +
-          currentTopicId +
-          "?problem=" +
-          encodeURIComponent(currentProblemSlug)
-      });
-    } else if (currentProblemSlug) {
-      chrome.tabs.create({
-        url: "http://localhost:5176/roadmap/?problem=" + encodeURIComponent(currentProblemSlug)
-      });
+    if (!currentProblemSlug) return;
+
+    let targetUrl = "http://localhost:5173/roadmap"; // Use standard Vite port 5173
+    if (currentTopicId) {
+      targetUrl = `http://localhost:5173/roadmap/${currentTopicId}?problem=${encodeURIComponent(currentProblemSlug)}`;
     } else {
-      alert("Problem not detected");
+      targetUrl = `http://localhost:5173/roadmap?problem=${encodeURIComponent(currentProblemSlug)}`;
     }
+
+    chrome.tabs.create({ url: targetUrl });
   };
 }
 
+if (askBtn) {
+  askBtn.onclick = () => {
+    // Open AI Workspace mentor session
+    const aiUrl = "http://localhost:5173/ai";
+    chrome.tabs.create({ url: aiUrl });
+  };
+}
+
+// Start
+document.addEventListener("DOMContentLoaded", initialize);

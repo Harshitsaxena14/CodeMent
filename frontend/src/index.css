@@ -1,1 +1,161 @@
 @import "tailwindcss";
+
+@theme {
+  --color-zinc-950: #09090b;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-600: #52525b;
+  --color-zinc-500: #71717a;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-50: #fafafa;
+  --color-accent-indigo: #6366f1;
+  --color-accent-cyan: #06b6d4;
+  --color-accent-emerald: #10b981;
+  
+  --font-sans: 'Geist Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+  
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@layer base {
+  body {
+    background-color: #09090b;
+    color: #fafafa;
+    overflow-x: hidden;
+  }
+}
+
+/* Premium Visual Utility Classes */
+
+.noise-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+}
+
+.grid-bg {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+}
+
+.radial-glow-cyan {
+  background: radial-gradient(circle 600px at 50% 50%, rgba(6, 182, 212, 0.05), transparent 80%);
+}
+
+.radial-glow-indigo {
+  background: radial-gradient(circle 800px at 50% 50%, rgba(99, 102, 241, 0.06), transparent 80%);
+}
+
+.text-gradient {
+  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(180deg, #06b6d4 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glass-card {
+  background: rgba(9, 9, 11, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.border-glow-indigo:hover {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.border-glow-cyan:hover {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+  border-color: rgba(6, 182, 212, 0.3);
+}
+
+.spotlight-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Custom scrollbar to match IDEs */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Learning Pipeline Glowing Flow Animations */
+
+@keyframes travel-particle {
+  0% {
+    transform: translate(-50%, -8px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 72px);
+    opacity: 0;
+  }
+}
+
+@keyframes node-pulse-completed {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.03);
+    border-color: rgba(16, 185, 129, 0.25);
+  }
+  50% {
+    transform: scale(1.008);
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+}
+
+@keyframes node-pulse-active {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 25px rgba(6, 182, 212, 0.12);
+    border-color: rgba(6, 182, 212, 0.6);
+  }
+  50% {
+    transform: scale(1.012);
+    box-shadow: 0 0 35px rgba(6, 182, 212, 0.25);
+    border-color: rgba(6, 182, 212, 0.9);
+  }
+}
+
+@keyframes node-pulse-locked {
+  0%, 100% {
+    transform: scale(1);
+    border-color: rgba(39, 39, 42, 0.6);
+  }
+  50% {
+    transform: scale(1.003);
+    border-color: rgba(82, 82, 91, 0.3);
+  }
+}

@@ -1,4 +1,4 @@
-const User=require("../models/User");
+const User=require("../models/user");
 const bcrypt=require("bcryptjs");
 const jwt=require("jsonwebtoken");
 
@@ -7,8 +7,6 @@ const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     
-    console.log("Mongoose state:", User.db.readyState);
-    console.log("Database:", User.db.name);
     const exists = await User.findOne({ email });
 
     if (exists) {
@@ -27,15 +25,12 @@ const registerUser = async (req, res) => {
 
     res.status(201).json({
       message: "User created",
-      user,
-    });res.status(201).json({
-  message:"User created",
-  user:{
-    id:user._id,
-    name:user.name,
-    email:user.email
-  }
-});
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      }
+    });
   } catch (error) {
     res.status(500).json({
       message: error.message,

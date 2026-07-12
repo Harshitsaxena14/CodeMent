@@ -1,4 +1,5 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const express = require("express");
 const cors = require("cors");
@@ -19,11 +20,13 @@ app.use("/api/problems", problemroutes);
 
 const startServer = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+    });
     console.log("MongoDB Connected");
 
     // Optional: seed sample problems on startup.
-    // This supports thousands later by replacing/updating seed data externally.
     try {
       const seedProblems = require("./seed/seedProblems");
       await seedProblems();
@@ -31,11 +34,12 @@ const startServer = async () => {
       console.log("Problem seeding skipped/failed:", e.message);
     }
 
-    app.listen(process.env.PORT || 5000, () => {
-      console.log("Server running on port 5000");
+    const port = process.env.PORT || 5000;
+    app.listen(port, () => {
+      console.log(`Server running on port ${port}`);
     });
   } catch (error) {
-    console.log(error.message);
+    console.error("MongoDB Connection Error:", error.message);
     process.exit(1);
   }
 };
