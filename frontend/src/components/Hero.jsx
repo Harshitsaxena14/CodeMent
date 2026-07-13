@@ -1,7 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Hero() {
-  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  const { enterGuestMode, isAuthenticated } = useAuth();
+  const token = localStorage.getItem("token") || isAuthenticated;
+
+  const handleGuestClick = () => {
+    enterGuestMode();
+    navigate("/dashboard");
+  };
 
   return (
     <section className="relative pt-32 pb-16 flex flex-col items-center justify-center text-center px-6 overflow-hidden">
@@ -35,8 +43,17 @@ function Hero() {
           to={token ? "/dashboard" : "/register"}
           className="w-full sm:w-auto flex items-center justify-center gap-1.5 px-8 py-3.5 rounded-xl bg-zinc-50 text-zinc-950 font-sans font-bold text-base hover:bg-zinc-200 active:scale-98 shadow-[0_4px_20px_rgba(255,255,255,0.08)] transition-all"
         >
-          Start Learning Free <span className="text-zinc-500 font-normal">→</span>
+          {token ? "Go to Dashboard" : "Start Learning Free"} <span className="text-zinc-500 font-normal">→</span>
         </Link>
+
+        {!token && (
+          <button
+            onClick={handleGuestClick}
+            className="w-full sm:w-auto flex items-center justify-center px-8 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-50 font-sans font-semibold text-base hover:bg-zinc-800/60 active:scale-98 transition-all cursor-pointer"
+          >
+            Explore as Guest
+          </button>
+        )}
 
         <a
           href="#pipeline"

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import API from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 
 // Structured mock data representing DSA problem templates and analysis states
 const problemTemplates = [
@@ -187,6 +188,7 @@ const getMockChatResponse = (actionName, problemId) => {
 };
 
 function AIMentor() {
+  const { isGuest, triggerGuestModal } = useAuth();
   const [selectedProb, setSelectedProb] = useState(problemTemplates[0]);
   const [code, setCode] = useState(problemTemplates[0].code);
   const [language, setLanguage] = useState(problemTemplates[0].languages[0]);
@@ -233,7 +235,12 @@ function AIMentor() {
     
     setTimeout(() => {
       setAnalysisStage("done");
+      if (isGuest) {
+        triggerGuestModal();
+      }
     }, 1200);
+
+    if (isGuest) return;
 
     try {
       await API.post("/ai", {
@@ -258,6 +265,10 @@ function AIMentor() {
       const aiResponse = { sender: "ai", text: res.text, quickActions: res.quickActions };
       setChatHistory((prev) => [...prev, aiResponse]);
       setChatLoading(false);
+      
+      if (isGuest) {
+        triggerGuestModal();
+      }
     }, 800);
   };
 

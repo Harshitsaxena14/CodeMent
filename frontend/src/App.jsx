@@ -12,6 +12,7 @@ import Insights from "./pages/insights";
 import Revision from "./pages/revision";
 import MissionPlanner from "./pages/missionplanner";
 import SidebarLayout from "./components/SidebarLayout";
+import Profile from "./pages/profile";
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
           
           {/* Legacy/QA Compatibility Mappings */}
           <Route path="/practice" element={<Navigate to="/roadmap" replace />} />
-          <Route path="/profile" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
 
         {/* Global Fallback Route */}

@@ -1,10 +1,13 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const token = localStorage.getItem("token");
+  const { enterGuestMode, isAuthenticated, isGuest } = useAuth();
+  
+  const token = localStorage.getItem("token") || isAuthenticated;
   
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -22,9 +25,14 @@ function Navbar() {
     setMobileMenuOpen(false);
   }, [location]);
 
-  const logout = () => {
-    localStorage.removeItem("token");
+  const handleLogout = () => {
+    logout();
     navigate("/login");
+  };
+
+  const handleGuestClick = () => {
+    enterGuestMode();
+    navigate("/dashboard");
   };
 
   const handleNavClick = (e, targetId) => {
@@ -126,8 +134,8 @@ function Navbar() {
                 Mission
               </Link>
               <button
-                onClick={logout}
-                className="text-sm font-medium text-zinc-450 hover:text-zinc-50 transition-colors cursor-pointer"
+                onClick={handleLogout}
+                className="text-sm font-medium text-zinc-455 hover:text-zinc-50 transition-colors cursor-pointer"
               >
                 Logout
               </button>
@@ -140,6 +148,12 @@ function Navbar() {
             </>
           ) : (
             <>
+              <button
+                onClick={handleGuestClick}
+                className="text-sm font-medium text-zinc-400 hover:text-zinc-50 transition-colors cursor-pointer"
+              >
+                Guest Mode
+              </button>
               <Link
                 to="/login"
                 className="text-sm font-medium text-zinc-400 hover:text-zinc-50 transition-colors"
@@ -221,20 +235,26 @@ function Navbar() {
                   Mission
                 </Link>
                 <button
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="text-left text-zinc-400 hover:text-zinc-50 transition-colors cursor-pointer"
                 >
                   Logout
                 </button>
                 <Link
                   to="/ai"
-                  className="w-full text-center px-4 py-2.5 rounded-lg bg-zinc-50 text-zinc-950 font-semibold"
+                  className="w-full text-center px-4 py-2.5 rounded-lg bg-zinc-50 text-zinc-955 font-semibold"
                 >
                   AI Mentor
                 </Link>
               </>
             ) : (
               <>
+                <button
+                  onClick={handleGuestClick}
+                  className="text-left text-zinc-400 hover:text-zinc-50 transition-colors cursor-pointer"
+                >
+                  Guest Mode
+                </button>
                 <Link to="/login" className="text-zinc-400 hover:text-zinc-50 transition-colors">
                   Login
                 </Link>

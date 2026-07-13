@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import API from "../api/axios";
+import { useAuth } from "../context/AuthContext";
+import roadmap from "../data/roadmap";
 
 // Generate realistic DSA contribution heatmap metrics for the past 18 weeks (126 days)
 const generateHeatmapData = () => {
@@ -41,9 +43,17 @@ const generateHeatmapData = () => {
 };
 
 function Insights() {
+  const { isGuest } = useAuth();
   const [heatmapData] = useState(generateHeatmapData());
   const [hoveredCell, setHoveredCell] = useState(null);
+  const [completed, setCompleted] = useState([]);
   const [readinessScore, setReadinessScore] = useState(78);
+  const [solvedCount, setSolvedCount] = useState(24);
+  const [easySolved, setEasySolved] = useState(18);
+  const [mediumSolved, setMediumSolved] = useState(5);
+  const [hardSolved, setHardSolved] = useState(1);
+  const [streak, setStreak] = useState(12);
+
   const [targetCompanies] = useState([
     { name: "Google", score: 72, icon: "G" },
     { name: "Amazon", score: 84, icon: "A" },
@@ -54,19 +64,61 @@ function Insights() {
 
   useEffect(() => {
     const fetchProgress = async () => {
-      try {
-        const res = await API.get("/progress");
-        if (res.data?.completedProblems) {
-          const solvedCount = res.data.completedProblems.length;
-          const baseReadiness = Math.min(Math.round((solvedCount / 120) * 100) + 40, 95);
-          setReadinessScore(baseReadiness);
+      let completedList = [];
+      let currentStreak = 12;
+
+      if (isGuest) {
+        const localProblems = localStorage.getItem("guestCompletedProblems");
+        completedList = localProblems ? JSON.parse(localProblems) : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+        currentStreak = parseInt(localStorage.getItem("guestStreak") || "12", 10);
+      } else {
+        try {
+          const res = await API.get("/progress");
+          if (res.data?.completedProblems) {
+            completedList = res.data.completedProblems;
+            currentStreak = res.data.streak || 12;
+          }
+        } catch (error) {
+          console.log("Insights manager: API offline, fallback to readiness 78%:", error);
+          completedList = [1, 2, 3, 4, 5];
         }
-      } catch (error) {
-        console.log("Insights manager: API offline, fallback to readiness 78%:", error);
       }
+
+      setCompleted(completedList);
+      setStreak(currentStreak);
+
+      let easy = 0;
+      let medium = 0;
+      let hard = 0;
+
+      const allQuestions = [];
+      roadmap.forEach((topic) => {
+        if (topic.questions) {
+          allQuestions.push(...topic.questions);
+        }
+      });
+
+      completedList.forEach((id) => {
+        const q = allQuestions.find((item) => item.id == id || item.name == id);
+        if (q) {
+          if (q.difficulty.toLowerCase() === "easy") easy++;
+          else if (q.difficulty.toLowerCase() === "medium") medium++;
+          else if (q.difficulty.toLowerCase() === "hard") hard++;
+        } else {
+          easy++;
+        }
+      });
+
+      setSolvedCount(completedList.length);
+      setEasySolved(easy);
+      setMediumSolved(medium);
+      setHardSolved(hard);
+
+      const baseReadiness = Math.min(Math.round((completedList.length / 120) * 100) + 40, 95);
+      setReadinessScore(baseReadiness);
     };
     fetchProgress();
-  }, []);
+  }, [isGuest]);
 
   const getIntensityColor = (intensity) => {
     switch (intensity) {
@@ -263,7 +315,7 @@ function Insights() {
                   strokeWidth="6"
                   strokeDasharray={2 * Math.PI * 40}
                   initial={{ strokeDashoffset: 2 * Math.PI * 40 }}
-                  animate={{ strokeDashoffset: 2 * Math.PI * 40 * 0.25 }}
+                  animate={{ strokeDashoffset: 2 * Math.PI * 40 * (1 - easySolved / (solvedCount || 1)) }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
                   stroke="currentColor"
                   fill="transparent"
@@ -276,14 +328,14 @@ function Insights() {
                   strokeWidth="6"
                   strokeDasharray={2 * Math.PI * 40}
                   initial={{ strokeDashoffset: 2 * Math.PI * 40 }}
-                  animate={{ strokeDashoffset: 2 * Math.PI * 40 * 0.70 }}
+                  animate={{ strokeDashoffset: 2 * Math.PI * 40 * (1 - (easySolved + mediumSolved) / (solvedCount || 1)) }}
                   transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
                   stroke="currentColor"
                   fill="transparent"
                 />
               </svg>
               <div className="absolute inset-0 flex flex-col items-center justify-center font-mono">
-                <span className="text-lg font-bold text-zinc-100 animate-pulse">24</span>
+                <span className="text-lg font-bold text-zinc-100 animate-pulse">{solvedCount}</span>
                 <span className="text-[9px] text-zinc-500">SOLVED</span>
               </div>
             </div>
@@ -291,15 +343,15 @@ function Insights() {
             <div className="space-y-2.5 font-mono text-xs text-zinc-400">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-accent-emerald"></span>
-                <span>Easy: <strong className="text-zinc-200">18 Solved</strong></span>
+                <span>Easy: <strong className="text-zinc-200">{easySolved} Solved</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-amber-500"></span>
-                <span>Medium: <strong className="text-zinc-200">5 Solved</strong></span>
+                <span>Medium: <strong className="text-zinc-200">{mediumSolved} Solved</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-red-500"></span>
-                <span>Hard: <strong className="text-zinc-200">1 Solved</strong></span>
+                <span>Hard: <strong className="text-zinc-200">{hardSolved} Solved</strong></span>
               </div>
             </div>
           </div>
@@ -356,7 +408,7 @@ function Insights() {
             <h3 className="text-base font-semibold text-zinc-100 border-b border-zinc-900 pb-4 mb-4">Daily Streak</h3>
             <div className="flex items-center justify-around text-center py-2">
               <div>
-                <div className="text-3xl font-bold font-mono text-gradient">12</div>
+                <div className="text-3xl font-bold font-mono text-gradient">{streak}</div>
                 <div className="text-[10px] text-zinc-500 font-mono mt-1 uppercase">Active Streak</div>
               </div>
               <div className="w-px h-10 bg-zinc-900" />

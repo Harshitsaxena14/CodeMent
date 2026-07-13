@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import roadmap from "../data/roadmap";
 import API from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 
 // Standard mock test case traces and step-by-step debugger replays for problems
 const problemReplays = {
@@ -35,6 +36,7 @@ const problemReplays = {
 function TopicDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { isGuest, triggerGuestModal } = useAuth();
   const topic = roadmap.find((t) => t.id == id);
 
   // States
@@ -53,6 +55,10 @@ function TopicDetails() {
   // Fetch progress from backend
   useEffect(() => {
     const getProgress = async () => {
+      if (isGuest) {
+        setCompleted([1, 2]); // Demo solved problem IDs
+        return;
+      }
       try {
         const res = await API.get("/progress");
         if (res.data?.completedProblems) {
@@ -63,7 +69,7 @@ function TopicDetails() {
       }
     };
     getProgress();
-  }, []);
+  }, [isGuest]);
 
   // Load problem context on selection
   useEffect(() => {
@@ -106,6 +112,9 @@ function TopicDetails() {
       localStorage.setItem(`note_${selectedProb.title}`, val);
       setTimeout(() => {
         setSaveStatus("Saved");
+        if (isGuest) {
+          triggerGuestModal();
+        }
       }, 550);
     }
   };
@@ -115,6 +124,9 @@ function TopicDetails() {
     setIsBookmarked(newState);
     if (selectedProb) {
       localStorage.setItem(`bookmark_${selectedProb.title}`, String(newState));
+    }
+    if (isGuest) {
+      triggerGuestModal();
     }
   };
 
@@ -136,6 +148,12 @@ function TopicDetails() {
       : [...completed, questionId];
 
     setCompleted(updated);
+
+    if (isGuest) {
+      localStorage.setItem("guestCompletedProblems", JSON.stringify(updated));
+      triggerGuestModal();
+      return;
+    }
 
     try {
       await API.post("/progress", {

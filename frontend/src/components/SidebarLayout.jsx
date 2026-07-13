@@ -2,10 +2,13 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate, Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import CommandPalette from "./CommandPalette";
+import GuestModal from "./GuestModal";
+import { useAuth } from "../context/AuthContext";
 
 function SidebarLayout() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isGuest, logout, triggerGuestModal } = useAuth();
 
   // Load expanded state from localStorage (default to true)
   const [isExpanded, setIsExpanded] = useState(() => {
@@ -21,8 +24,8 @@ function SidebarLayout() {
     });
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
+  const handleLogout = () => {
+    logout();
     navigate("/login");
   };
 
@@ -195,7 +198,7 @@ function SidebarLayout() {
 
           {/* Logout Trigger */}
           <button
-            onClick={logout}
+            onClick={handleLogout}
             className="w-full flex items-center gap-3.5 px-3 py-3 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-red-500/5 transition-all relative group outline-none focus-visible:ring-1 focus-visible:ring-red-400 cursor-pointer text-left"
           >
             <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
@@ -212,12 +215,34 @@ function SidebarLayout() {
       </motion.aside>
 
       {/* Main content body canvas */}
-      <main className="flex-1 h-screen overflow-y-auto relative">
-        <Outlet />
+      <main className="flex-1 h-screen overflow-hidden relative flex flex-col">
+        {isGuest && (
+          <div className="w-full bg-accent-cyan/10 border-b border-accent-cyan/20 px-6 py-2.5 flex items-center justify-between text-[11px] font-mono text-accent-cyan z-20 flex-shrink-0">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-cyan opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-cyan"></span>
+              </span>
+              <span>Running in <strong className="text-zinc-200">Demo Mode</strong>. Actions will not be saved.</span>
+            </div>
+            <button
+              onClick={triggerGuestModal}
+              className="px-2.5 py-0.5 rounded bg-accent-cyan text-zinc-950 font-bold hover:bg-zinc-200 transition-colors uppercase tracking-wider text-[9px] cursor-pointer"
+            >
+              Sign Up
+            </button>
+          </div>
+        )}
+        <div className="flex-1 overflow-y-auto">
+          <Outlet />
+        </div>
       </main>
 
       {/* Global Command Palette */}
       <CommandPalette />
+
+      {/* Global Guest Mode Modal */}
+      <GuestModal />
     </div>
   );
 }

@@ -2,13 +2,23 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import API from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 
 function Dashboard() {
   const [progress, setProgress] = useState(null);
   const location = useLocation();
+  const { isGuest, triggerGuestModal } = useAuth();
 
   useEffect(() => {
     const loadProgress = async () => {
+      if (isGuest) {
+        setProgress({
+          completedProblems: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+          streak: 12,
+          xp: 450
+        });
+        return;
+      }
       try {
         const res = await API.get("/progress");
         setProgress(res.data);
@@ -17,7 +27,7 @@ function Dashboard() {
       }
     };
     loadProgress();
-  }, []);
+  }, [isGuest]);
 
   const solved = progress?.completedProblems?.length || 24;
   const total = 120;
@@ -120,13 +130,18 @@ function Dashboard() {
           </div>
           
           {/* Sync indicator */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900/50 border border-zinc-800 text-[11px] font-mono text-zinc-400 hover:border-zinc-700 transition-all">
+          <button
+            onClick={() => {
+              if (isGuest) triggerGuestModal();
+            }}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-900/50 border border-zinc-800 text-[11px] font-mono text-zinc-400 hover:border-zinc-700 transition-all cursor-pointer"
+          >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-cyan opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-cyan"></span>
             </span>
             <span>LeetCode synced via Extension</span>
-          </div>
+          </button>
         </div>
 
         {/* Dashboard Grid System */}
