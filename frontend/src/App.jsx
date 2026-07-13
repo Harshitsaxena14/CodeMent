@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home";
 import Roadmap from "./pages/roadmap";
 import TopicDetails from "./pages/topicdetails";
@@ -33,7 +33,14 @@ function App() {
           <Route path="/insights" element={<Insights />} />
           <Route path="/revision" element={<Revision />} />
           <Route path="/mission" element={<MissionPlanner />} />
+          
+          {/* Legacy/QA Compatibility Mappings */}
+          <Route path="/practice" element={<Navigate to="/roadmap" replace />} />
+          <Route path="/profile" element={<Navigate to="/dashboard" replace />} />
         </Route>
+
+        {/* Global Fallback Route */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );
