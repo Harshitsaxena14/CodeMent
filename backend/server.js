@@ -17,6 +17,7 @@ mongoose.set("bufferCommands", false);
 app.use("/api/auth", require("./routes/authroutes"));
 app.use("/api/progress", require("./routes/progressroutes"));
 app.use("/api/problems", problemroutes);
+app.use("/api/problem", problemroutes);
 
 const startServer = async () => {
   try {

@@ -74,6 +74,10 @@ const trackProblem=async(req,res)=>{
    });
   }
 
+  if (status === "solved" && !progress.completedProblems.includes(slug)) {
+    progress.completedProblems.push(slug);
+  }
+
   await progress.save();
 
   res.json({

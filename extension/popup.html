@@ -2,384 +2,146 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CodeMent - LeetCode DSA Workspace Sync</title>
-  <style>
-    /* CodeMent Premium Design Tokens (Linear/Raycast inspired) */
-    :root {
-      --bg-color: #09090b;
-      --bg-card: rgba(24, 24, 27, 0.4);
-      --border-color: rgba(255, 255, 255, 0.04);
-      --border-glow: rgba(255, 255, 255, 0.08);
-      --text-primary: #fafafa;
-      --text-secondary: #a1a1aa;
-      --text-muted: #71717a;
-      
-      --accent-cyan: #06b6d4;
-      --accent-indigo: #6366f1;
-      
-      --difficulty-easy: #10b981;
-      --difficulty-medium: #f59e0b;
-      --difficulty-hard: #ef4444;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      width: 380px;
-      background: var(--bg-color);
-      color: var(--text-primary);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      padding: 20px;
-      overflow-x: hidden;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    /* Shimmer Animation */
-    @keyframes shimmer {
-      0% {
-        background-position: -200% 0;
-      }
-      100% {
-        background-position: 200% 0;
-      }
-    }
-
-    .shimmer {
-      background: linear-gradient(90deg, #18181b 25%, #27272a 50%, #18181b 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.6s infinite ease-in-out;
-      border-radius: 4px;
-      display: inline-block;
-    }
-
-    .skeleton-title {
-      width: 60%;
-      height: 16px;
-      margin-bottom: 8px;
-    }
-
-    .skeleton-badge {
-      width: 50px;
-      height: 14px;
-      border-radius: 9999px;
-    }
-
-    .skeleton-text {
-      width: 40%;
-      height: 12px;
-      margin-top: 4px;
-    }
-
-    /* Layout Elements */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 12px;
-      border-b: 1px solid var(--border-color);
-      margin-bottom: 16px;
-    }
-
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .logo-text {
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .sync-status {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: monospace;
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    .status-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent-cyan);
-      box-shadow: 0 0 8px var(--accent-cyan);
-    }
-
-    .status-dot.active {
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.6; }
-    }
-
-    /* Content Cards */
-    .content-area {
-      min-height: 110px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 16px;
-      border-radius: 12px;
-      backdrop-filter: blur(8px);
-      transition: border-color 0.2s;
-    }
-
-    .card:hover {
-      border-color: var(--border-glow);
-    }
-
-    .problem-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .problem-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.01em;
-    }
-
-    .badge {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2.5px 8px;
-      border-radius: 9999px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .badge.easy {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--difficulty-easy);
-      border: 1px solid rgba(16, 185, 129, 0.15);
-    }
-
-    .badge.medium {
-      background: rgba(245, 158, 11, 0.1);
-      color: var(--difficulty-medium);
-      border: 1px solid rgba(245, 158, 11, 0.15);
-    }
-
-    .badge.hard {
-      background: rgba(239, 68, 68, 0.1);
-      color: var(--difficulty-hard);
-      border: 1px solid rgba(239, 68, 68, 0.15);
-    }
-
-    .meta-grid {
-      display: grid;
-      grid-template-cols: 1fr 1fr;
-      gap: 12px;
-      padding-top: 12px;
-      border-t: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    .meta-item {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .meta-label {
-      font-size: 9px;
-      font-family: monospace;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .meta-value {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-top: 3px;
-    }
-
-    /* Empty/Onboarding States */
-    .onboarding-state {
-      text-align: center;
-      padding: 16px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .onboarding-icon {
-      width: 24px;
-      height: 24px;
-      color: var(--text-muted);
-    }
-
-    .onboarding-text {
-      font-size: 12px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* Actions */
-    .actions {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s;
-      outline: none;
-    }
-
-    .btn-primary {
-      background: var(--text-primary);
-      color: var(--bg-color);
-      border: none;
-    }
-
-    .btn-primary:hover {
-      background: #e4e4e7;
-    }
-
-    .btn-primary:active {
-      transform: scale(0.98);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-secondary);
-      border: 1px solid var(--border-color);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--border-glow);
-      color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .btn-secondary:active {
-      transform: scale(0.98);
-    }
-
-    button:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none !important;
-    }
-
-    /* Utility */
-    .hidden {
-      display: none !important;
-    }
-  </style>
+  <title>CodeMent - DSA Companion</title>
+  <link rel="stylesheet" href="popup/popup.css">
 </head>
 <body>
+  <!-- Grid background overlay -->
+  <div class="grid-bg"></div>
 
-  <!-- Header -->
+  <!-- Header Section -->
   <div class="header">
     <div class="logo-container">
-      <div class="status-dot active"></div>
-      <span class="logo-text">CodeMent</span>
+      <svg class="logo-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+      </svg>
+      <span class="logo-text">CodeMent Mentor</span>
     </div>
-    <div class="sync-status">
-      <span>SYNC ACTIVE</span>
+    <div class="timer-container">
+      <span class="timer-icon">⏱</span>
+      <span id="solvingTimer">00:00</span>
     </div>
   </div>
 
-  <!-- Content Area (Card or Onboarding) -->
+  <!-- Main Content View Area -->
   <div class="content-area">
     
-    <!-- Shimmer Loader Skeleton -->
-    <div id="loaderState" class="card hidden">
-      <div class="problem-header">
-        <div class="shimmer skeleton-title"></div>
-        <div class="shimmer skeleton-badge"></div>
-      </div>
-      <div class="meta-grid">
-        <div class="meta-item">
-          <div class="shimmer skeleton-text" style="width: 50%"></div>
-          <div class="shimmer skeleton-text" style="width: 80%; height: 10px;"></div>
-        </div>
-        <div class="meta-item">
-          <div class="shimmer skeleton-text" style="width: 50%"></div>
-          <div class="shimmer skeleton-text" style="width: 70%; height: 10px;"></div>
-        </div>
-      </div>
+    <!-- Shimmer Loader Skeleton State -->
+    <div id="loaderState" class="glass-card hidden">
+      <div class="shimmer skeleton-title"></div>
+      <div class="shimmer skeleton-line"></div>
+      <div class="shimmer skeleton-line"></div>
     </div>
 
-    <!-- Active Found State -->
-    <div id="activeState" class="card hidden">
-      <div class="problem-header">
-        <span id="problemTitle" class="problem-title">Loading Problem...</span>
-        <span id="difficultyBadge" class="badge easy">Easy</span>
-      </div>
-      <div class="meta-grid">
-        <div class="meta-item">
-          <span class="meta-label">Topic</span>
-          <span id="topicValue" class="meta-value">-</span>
+    <!-- Active Problem State -->
+    <div id="activeState" class="hidden">
+      <!-- Title & Topic Mapping -->
+      <div class="glass-card main-info-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+          <h2 id="problemTitle" style="margin-bottom: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-w-[200px];">Two Sum</h2>
+          <span id="metadataBadge" class="badge badge-official">Official</span>
         </div>
-        <div class="meta-item">
-          <span class="meta-label">Pattern</span>
-          <span id="patternValue" class="meta-value">-</span>
+        <div id="topicMapping" class="topic-mapping">Topic: Arrays → HashMap</div>
+      </div>
+
+      <!-- Current Solving State Bar -->
+      <div id="solvingStateBar" class="glass-card solving-state-bar">
+        <div class="state-label">
+          <span class="state-dot-active"></span>
+          <span>Solving: <strong id="solvingStateText">In Progress</strong></span>
         </div>
       </div>
+
+      <!-- Wrong Answer / TLE Diagnostic Placeholder State -->
+      <div id="failureStatusCard" class="glass-card failure-status-card hidden">
+        <span id="failureStatusText">Wrong Answer ❌</span>
+        <button id="failureAnalyzeBtn" class="btn btn-primary btn-xs">Analyze with AI Mentor</button>
+      </div>
+
+      <!-- Primary Action: Stuck workflow trigger -->
+      <div id="primaryActionArea" class="action-box">
+        <button id="stuckBtn" class="btn btn-secondary w-full">I'm Stuck 💡</button>
+      </div>
+
+      <!-- Stuck Options Menu -->
+      <div id="stuckMenu" class="glass-card stuck-menu hidden">
+        <div class="card-subtitle">What are you stuck with?</div>
+        <div class="menu-grid">
+          <button class="menu-btn" data-type="pattern">Pattern 🧩</button>
+          <button class="menu-btn" data-type="complexity">Complexity ⏱</button>
+          <button class="menu-btn" data-type="logic">Logic 🧠</button>
+          <button class="menu-btn" data-type="edgecases">Edge Cases ⚠️</button>
+        </div>
+        <button id="stuckMenuBack" class="btn-text">← Back to Workspace</button>
+      </div>
+
+      <!-- Stuck Guidance Panel -->
+      <div id="guidancePanel" class="glass-card guidance-panel hidden">
+        <div id="guidanceHeader" class="card-subtitle">PATTERN GUIDANCE</div>
+        <div id="guidanceContent" class="guidance-content">
+          <!-- Dynamic guidance render -->
+        </div>
+        <button id="guidanceBack" class="btn-text">← Back to Options</button>
+      </div>
+
+    </div>
+
+    <!-- AI Mentor Direct Chat Panel (Swapped in view) -->
+    <div id="chatState" class="glass-card chat-state hidden">
+      <div class="chat-header">
+        <div class="chat-title">AI Mentor Chat 💬</div>
+        <button id="chatCloseBtn" class="btn-text">← Exit Chat</button>
+      </div>
+      <div class="chat-context">
+        Solving: <span id="chatContextText" class="font-mono" style="color: var(--accent-cyan);">Two Sum (JS)</span>
+      </div>
+      <div id="chatMessages" class="chat-messages">
+        <div class="chat-message mentor">
+          Hi! I'm your senior DSA mentor. Ask me any conceptual questions, debugging help, or complexity queries about this problem. I already know what language and problem context you are solving in!
+        </div>
+      </div>
+      <form id="chatForm" class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Ask a question..." autocomplete="off" required>
+        <button type="submit" id="chatSendBtn" class="btn btn-primary" style="padding: 2px 8px;">Send</button>
+      </form>
     </div>
 
     <!-- Empty/Onboarding State -->
-    <div id="emptyState" class="onboarding-state">
-      <svg class="onboarding-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <p class="onboarding-text">
-        Navigate to any LeetCode problem page. CodeMent will automatically extract dynamic complexity diagnostics and map curriculum connections.
+    <div id="emptyState" class="glass-card empty-state hidden">
+      <p class="empty-text">
+        Navigate to a LeetCode problem page. CodeMent will automatically connect.
+      </p>
+    </div>
+
+    <!-- Connection Error State -->
+    <div id="errorState" class="glass-card empty-state hidden">
+      <p class="empty-text error-text">
+        Could not connect to CodeMent server. Ensure local backend is running on port 5000.
       </p>
     </div>
 
   </div>
 
-  <!-- Actions -->
+  <!-- Bottom Workspace Actions -->
   <div class="actions">
-    <button id="openBtn" class="btn-primary" disabled>
-      Open Workspace 🚀
-    </button>
-    <button id="askBtn" class="btn-secondary" disabled>
-      Ask AI Mentor 💬
-    </button>
+    <div class="actions-row">
+      <button id="openBtn" class="btn btn-primary" disabled>Open Workspace 🚀</button>
+      <button id="askBtn" class="btn btn-secondary" disabled>Ask AI Mentor 💬</button>
+    </div>
+    <button id="revisionBtn" class="btn btn-danger-outline" disabled>Mark for Revision 📌</button>
+  </div>
+
+  <!-- Footer Info Status -->
+  <div class="footer">
+    <span id="lastSynced">Last Synced: --:--</span>
+    <div class="footer-item">
+      <span>SERVER:</span>
+      <span id="backendStatus">OFFLINE</span>
+    </div>
   </div>
 
   <!-- Scripts -->
   <script src="problems.js"></script>
-  <script src="popup.js"></script>
+  <script type="module" src="popup/popup.js"></script>
 </body>
 </html>

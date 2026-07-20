@@ -2,32 +2,55 @@ const hashing = {
   id: 9,
   topicId: "hashing",
   title: "Hashing",
-  description: "Key-value indexing structures. Crucial for reducing search time complexities from linear O(N) to constant O(1).",
-  estimatedTime: "3 Hours",
+  description: "Learn hash table insertions, collision resolution, constant time O(1) searches, and frequency tracking.",
+  estimatedTime: "4 Hours",
   difficulty: "Easy",
-  prerequisites: ["arrays"],
-  learningObjectives: ["HashMap mappings", "Collision resolution"],
+  prerequisites: ["basics"],
+  learningObjectives: [
+    "Perform search and insert operations in O(1) average time complexity",
+    "Identify subarray sums matching target checks using prefix sums stored in HashMaps"
+  ],
+  concepts: ["Hash Table", "HashSet", "HashMap Lookup"],
   modules: [
     {
-      id: "mod-hashing-ops",
-      title: "Hash Tables & Collisions",
+      id: "mod-hashing-lookups",
+      title: "HashMap Traversal & Complements",
       order: 1,
-      shortDescription: "Fundamentals of hash buckets and key mappings.",
-      estimatedTime: "60 Mins",
+      shortDescription: "Master constant-time key-value mapping to solve linear search queries.",
+      estimatedTime: "120 Mins",
       difficulty: "Easy",
       lessons: [
         {
-          id: "lesson-hashing-buckets",
-          title: "Hash Mappings and Buckets",
-          learningObjective: "Understand direct mapping index arrays and collision resolutions.",
-          estimatedDuration: "30 Mins",
+          id: "lesson-hashing-twosum",
+          title: "HashMap Target Complements",
+          learningObjective: "Identify index pairs matching target sum using HashMaps in O(N) runtime.",
+          estimatedDuration: "25 Mins",
           difficulty: "Easy",
           prerequisiteLessons: [],
-          conciseExplanationPlaceholder: "Map keys to index values using modular functions. Resolve collisions using chaining or linear probing.",
-          implementationTipsPlaceholder: ["Ensure hash functions yield uniform distribution"],
-          commonMistakesPlaceholder: ["Forgetting negative hash value outputs conversion"],
+          conciseExplanationPlaceholder: "Hash maps store values mapped to unique keys, enabling average O(1) searches. In target sum problems, instead of checking all pairs O(N^2), scan each element and search the hash map for its complement (target - current). If found, return the pair. If not, record the current element and its index in the map. This tracks history in one pass.",
+          implementationTipsPlaceholder: [
+            "Validate key existence in the map before retrieving index values",
+            "Store complements as keys for fast lookup indexing"
+          ],
+          commonMistakesPlaceholder: [
+            "Re-using the same element twice (e.g. index mapping targets itself).",
+            "Failing to handle hash collisions under non-optimal hashing models."
+          ],
           linkedPracticeProblems: [
-            { id: "h1", title: "Contains Duplicate", difficulty: "Easy", pattern: "HashMap", link: "https://leetcode.com/problems/contains-duplicate/" }
+            {
+              id: 901,
+              title: "Two Sum",
+              difficulty: "Easy",
+              pattern: "HashMap Lookup",
+              link: "https://leetcode.com/problems/two-sum/"
+            },
+            {
+              id: 902,
+              title: "Subarray Sum Equals K",
+              difficulty: "Medium",
+              pattern: "Prefix HashMap",
+              link: "https://leetcode.com/problems/subarray-sum-equals-k/"
+            }
           ],
           completionState: false
         }

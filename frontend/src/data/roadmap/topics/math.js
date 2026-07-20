@@ -1,33 +1,49 @@
 const math = {
   id: 26,
   topicId: "math",
-  title: "Math for DSA",
-  description: "Combinatorial principles, matrix operations, and probability equations. Master combinations, permutations, and exponentiation calculations.",
+  title: "Math & Geometry",
+  description: "Learn fast exponentiation, matrix multiplications, basic combinations (nCr), and geometric coordinate sweeps.",
   estimatedTime: "4 Hours",
-  difficulty: "Easy",
+  difficulty: "Medium",
   prerequisites: ["basics"],
-  learningObjectives: ["Understand combinatorial counts formulas", "Compute fast exponentiation values"],
+  learningObjectives: [
+    "Compute dynamic powers (x^n) in logarithmic O(log N) runtime using binary exponentiation",
+    "Identify geometric coordinate alignments using cross-product direction parameters"
+  ],
+  concepts: ["Binary Exponentiation", "Matrix Operations", "Geometric Sweep Line"],
   modules: [
     {
-      id: "mod-math-exponentiation",
-      title: "Binary Exponentiation",
+      id: "mod-math-basics",
+      title: "Binary Arithmetic & Powers",
       order: 1,
-      shortDescription: "Calculate power operations in logarithmic time O(log N).",
-      estimatedTime: "45 Mins",
+      shortDescription: "Optimize arithmetic iterations using binary index splits.",
+      estimatedTime: "120 Mins",
       difficulty: "Easy",
       lessons: [
         {
-          id: "lesson-fast-exp",
-          title: "Binary Power Splits",
-          learningObjective: "Evaluate pow(x, n) iteratively in O(log n) time.",
-          estimatedDuration: "20 Mins",
-          difficulty: "Easy",
+          id: "lesson-math-pow",
+          title: "Fast Exponentiation",
+          learningObjective: "Compute x^n in O(log N) time.",
+          estimatedDuration: "25 Mins",
+          difficulty: "Medium",
           prerequisiteLessons: [],
-          conciseExplanationPlaceholder: "Divide n by 2 recursively. Square base variable x dynamically, accounting for odd exponents.",
-          implementationTipsPlaceholder: ["Use bitwise right shift 'n = n >> 1' for divisions"],
-          commonMistakesPlaceholder: ["Forgetting to handle negative exponent values properly"],
+          conciseExplanationPlaceholder: "Binary exponentiation (divide-and-conquer) computes x^n. If n is even, evaluate x^n = (x^2)^(n/2). If n is odd, evaluate x^n = x * x^(n-1). This reduces multiplications from linear O(N) to logarithmic O(log N).",
+          implementationTipsPlaceholder: [
+            "Handle negative exponents carefully by taking reciprocal 1/x and using positive n",
+            "Be aware of integer overflow bounds when n = -2^31"
+          ],
+          commonMistakesPlaceholder: [
+            "Stack overflow errors caused by omitting base case checks when n = 0.",
+            "Arithmetic overflow when squaring x repeatedly."
+          ],
           linkedPracticeProblems: [
-            { id: "m1", title: "Pow(x, n)", difficulty: "Medium", pattern: "Fast Exponentiation", link: "https://leetcode.com/problems/powx-n/" }
+            {
+              id: 2601,
+              title: "Pow(x, n)",
+              difficulty: "Medium",
+              pattern: "Binary Exponentiation",
+              link: "https://leetcode.com/problems/powx-n/"
+            }
           ],
           completionState: false
         }

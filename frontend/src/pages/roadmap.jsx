@@ -18,7 +18,44 @@ const initialNodes = [
     prereqs: [],
     unlocks: ["hashing", "strings"],
     overview: "Fundamental contiguous memory structures. Master pointer iterations, boundary conditions, and sliding offsets.",
-    concepts: ["Traversal", "Two Pointer", "Prefix Sum", "Kadane's Algorithm"],
+    concepts: [
+      "Largest Element in Array",
+      "Second Largest Element (No Sorting)",
+      "Check if Array is Sorted",
+      "Remove Duplicates in-place",
+      "Left Rotate Array by One Place",
+      "Left Rotate Array by D Places",
+      "Move Zeros to End",
+      "Linear Search Basics",
+      "Union & Intersection of Two Sorted Arrays",
+      "Find Missing Number",
+      "Maximum Consecutive Ones",
+      "Find Number that Appears Once",
+      "Two Sum (Target Sum Pairs)",
+      "Sort Array of 0s, 1s, and 2s (Dutch National Flag)",
+      "Majority Element (> N/2 times) (Boyer-Moore)",
+      "Kadane's Algorithm (Max Subarray Sum)",
+      "Print Maximum Subarray Sum Indices",
+      "Rearrange Array Elements by Sign",
+      "Next Permutation (Lexicographical)",
+      "Leaders in Array",
+      "Longest Consecutive Sequence",
+      "Set Matrix Zeros",
+      "Rotate Matrix by 90 Degrees in-place",
+      "Spiral Matrix Traversal",
+      "Subarrays with Sum Equals K (Prefix Sum + Map)",
+      "Pascal's Triangle (nCr generation)",
+      "Majority Element II (> N/3 times)",
+      "3-Sum Problem (Unique Triplets)",
+      "4-Sum Problem (Unique Quadruplets)",
+      "Merge Overlapping Intervals",
+      "Merge Sorted Arrays Without Extra Space",
+      "Find Repeating and Missing Number",
+      "Count Inversions (Merge Sort based)",
+      "Reverse Pairs (Double Indexing)",
+      "Maximum Product Subarray",
+      "Coordinate Compression"
+    ],
     problems: [
       { name: "Two Sum", difficulty: "Easy", link: "https://leetcode.com/problems/two-sum/" },
       { name: "Move Zeroes", difficulty: "Easy", link: "https://leetcode.com/problems/move-zeroes/" }
@@ -39,7 +76,24 @@ const initialNodes = [
     prereqs: ["arrays"],
     unlocks: ["binary-search", "trees"],
     overview: "Key-value indexing structures. Crucial for reducing search time complexities from linear O(N) to constant O(1).",
-    concepts: ["HashMap Mappings", "Collision Resolution", "Direct Addressing"],
+    concepts: [
+      "Direct Address Tables (DAT)",
+      "Hash Functions (Division, Multiplication)",
+      "Open Addressing: Linear Probing",
+      "Open Addressing: Quadratic Probing & Double Hashing",
+      "Closed Addressing: Chaining (LinkedList buckets)",
+      "Load Factor and Dynamic Rehashing Limits",
+      "HashMap vs. HashSet Internals",
+      "Frequency Counting & Character Maps",
+      "Subarray Sum Equals K (Zero Sum Queries)",
+      "Longest Subarray with Sum divisible by K",
+      "Subarray with Given XOR (Prefix XOR Map)",
+      "Longest Substring Without Repeating Characters",
+      "Minimum Window Substring (HashMap Window)",
+      "Design HashMap from Scratch",
+      "Design HashSet from Scratch",
+      "Consistent Hashing Principles"
+    ],
     problems: [
       { name: "Contains Duplicate", difficulty: "Easy", link: "https://leetcode.com/problems/contains-duplicate/" },
       { name: "Group Anagrams", difficulty: "Medium", link: "https://leetcode.com/problems/group-anagrams/" }
@@ -60,7 +114,30 @@ const initialNodes = [
     prereqs: ["arrays"],
     unlocks: ["sliding-window", "trees", "dp"],
     overview: "Sequence parsing arrays. Master substring search, pattern matching algorithms, and anagram properties.",
-    concepts: ["String Matching", "KMP Algorithm", "Rabin-Karp Rolling Hash"],
+    concepts: [
+      "Reverse Words in String",
+      "Largest Odd Number in String",
+      "Longest Common Prefix",
+      "Isomorphic Strings",
+      "Rotate String Check (Cyclic shift)",
+      "Valid Anagram Verification",
+      "Sort Characters by Frequency",
+      "Maximum Nesting Depth of Parentheses",
+      "Roman to Integer & Integer to Roman",
+      "String to Integer (atoi)",
+      "Implement strstr (substring search)",
+      "Substring with K Distinct Characters",
+      "Longest Palindromic Substring",
+      "Sum of Beauty of All Substrings",
+      "Reverse Words in-place (word boundaries)",
+      "Knuth-Morris-Pratt (KMP) (LPS Array)",
+      "Rabin-Karp Rolling Hash Algorithm",
+      "Z-Algorithm (Linear Pattern Matching)",
+      "Manacher's Algorithm (Palindromic Substrings)",
+      "Minimum Add to Make Parentheses Valid",
+      "Parsing Boolean Expressions",
+      "Count and Say"
+    ],
     problems: [
       { name: "Valid Anagram", difficulty: "Easy", link: "https://leetcode.com/problems/valid-anagram/" },
       { name: "Longest Substring Without Repeating Characters", difficulty: "Medium", link: "https://leetcode.com/problems/longest-substring-without-repeating-characters/" }
@@ -81,7 +158,35 @@ const initialNodes = [
     prereqs: ["hashing"],
     unlocks: [],
     overview: "Logarithmic lookup mechanism inside ordered ranges. Solve non-trivial bounds searches and search-space cuts.",
-    concepts: ["Standard Binary Search", "Search Space Cuts", "Rotated Sorted Arrays"],
+    concepts: [
+      "Iterative & Recursive Binary Search",
+      "Lower Bound Implementation",
+      "Upper Bound Implementation",
+      "Search Insert Position",
+      "Floor and Ceil in Sorted Array",
+      "First and Last Occurrences of Key",
+      "Count Occurrences of Key in Sorted Array",
+      "Number of Times Sorted Array is Rotated",
+      "Search in Rotated Sorted Array I (Unique)",
+      "Search in Rotated Sorted Array II (Duplicates)",
+      "Find Minimum in Rotated Sorted Array",
+      "Single Element in Sorted Array (Odd-Even Indices)",
+      "Find Peak Element (1D Peak)",
+      "Find Square Root of Integer (Precision bounds)",
+      "Find Nth Root of Integer (Floating Point Search)",
+      "Koko Eating Bananas",
+      "Minimum Days to Make M Bouquets",
+      "Find Smallest Divisor Given Threshold",
+      "Capacity to Ship Packages Within D Days",
+      "Kth Missing Positive Number",
+      "Aggressive Cows (Minimize Max Distance)",
+      "Book Allocation Problem (Minimize Max Pages)",
+      "Split Array Largest Sum (Equivalent to Books)",
+      "Painter's Partition Problem",
+      "Median of Two Sorted Arrays (Partitioning)",
+      "Kth Element of Two Sorted Arrays",
+      "Find Peak Element II (2D Grid Peak)"
+    ],
     problems: [
       { name: "Search in Rotated Sorted Array", difficulty: "Medium", link: "https://leetcode.com/problems/search-in-rotated-sorted-array/" }
     ],
@@ -101,7 +206,23 @@ const initialNodes = [
     prereqs: ["strings"],
     unlocks: [],
     overview: "Sub-segment subarray optimizations. Avoid repetitive inner loop iterations on contiguous sequences.",
-    concepts: ["Fixed Window Boundaries", "Dynamic Expanding Windows", "Two-pointer syncing"],
+    concepts: [
+      "Max Sum Subarray of Size K (Fixed)",
+      "First Negative Integer in Window K (Fixed)",
+      "Count Occurrences of Anagrams (Fixed)",
+      "Maximum of All Subarrays of Size K (Monotonic Deque)",
+      "Longest Subarray with Sum K (Positive elements)",
+      "Longest Subarray with Sum K (Negative elements)",
+      "Longest Substring with K Unique Characters",
+      "Longest Substring Without Repeating Characters",
+      "Longest Repeating Character Replacement",
+      "Max Consecutive Ones III (At most K flips)",
+      "Binary Subarrays With Sum (Sum equals target)",
+      "Subarrays with K Different Integers",
+      "Fruit Into Baskets (Max 2 types)",
+      "Minimum Window Subsequence",
+      "Minimum Window Substring"
+    ],
     problems: [
       { name: "Minimum Size Subarray Sum", difficulty: "Medium", link: "https://leetcode.com/problems/minimum-size-subarray-sum/" }
     ],
@@ -121,7 +242,50 @@ const initialNodes = [
     prereqs: ["hashing", "strings"],
     unlocks: ["graphs"],
     overview: "Non-linear hierarchical nodes. Master post-order, pre-order, and level-order traversals, and BST properties.",
-    concepts: ["BFS & DFS Traversals", "Binary Search Trees (BST)", "LCA Ancestors"],
+    concepts: [
+      "Binary Tree Representation & Node structure",
+      "Pre-order Traversal (Recursive & Iterative)",
+      "In-order Traversal (Recursive & Iterative)",
+      "Post-order Traversal (Recursive & Iterative)",
+      "Level Order Traversal (Queue BFS)",
+      "Morris Traversal (Inorder/Preorder - O(1) Space)",
+      "Height / Maximum Depth of Binary Tree",
+      "Check for Balanced Binary Tree (O(N) bottom-up)",
+      "Diameter of Binary Tree",
+      "Maximum Path Sum (Any node to any node)",
+      "Identical Trees Check",
+      "Zig-Zag Spiral Level Order Traversal",
+      "Boundary Traversal (Anti-clockwise)",
+      "Vertical Order Traversal (Column-based BFS/DFS)",
+      "Top View of Binary Tree",
+      "Bottom View of Binary Tree",
+      "Left & Right View of Binary Tree",
+      "Symmetric Trees Check",
+      "Root to Node Path sequence",
+      "Lowest Common Ancestor (LCA) of Binary Tree",
+      "Maximum Width of Binary Tree",
+      "Children Sum Property (Conversion & validation)",
+      "All Nodes Distance K in Binary Tree",
+      "Burn a Binary Tree (Leaf infection spread)",
+      "Count Complete Tree Nodes (Logarithmic height checks)",
+      "Construct Tree from Preorder & Inorder",
+      "Construct Tree from Postorder & Inorder",
+      "Serialize and Deserialize Binary Tree",
+      "BST Property Verification",
+      "Search in BST",
+      "Insert Node in BST",
+      "Delete Node in BST",
+      "Find Ceil and Floor in BST",
+      "Kth Smallest/Largest Element in BST",
+      "LCA in BST",
+      "Construct BST from Preorder",
+      "Inorder Successor & Predecessor in BST",
+      "Binary Tree to BST Conversion",
+      "Merge Two BSTs",
+      "Two Sum in BST (BST Iterator approach)",
+      "Recover BST (Two swapped nodes correction)",
+      "Largest BST in Binary Tree"
+    ],
     problems: [
       { name: "Invert Binary Tree", difficulty: "Easy", link: "https://leetcode.com/problems/invert-binary-tree/" }
     ],
@@ -141,7 +305,40 @@ const initialNodes = [
     prereqs: ["trees"],
     unlocks: ["dp"],
     overview: "Networks of connected vertices. Solve grid traversals, topological mappings, and shortest path weights.",
-    concepts: ["Representations", "Cycle Detection", "Topological Sort", "Dijkstra's Algorithm"],
+    concepts: [
+      "Adjacency Matrix & Adjacency List Representations",
+      "Breadth First Search (BFS) Traversal",
+      "Depth First Search (DFS) Traversal",
+      "Connected Components (Undirected/Directed)",
+      "Cycle Detection in Undirected Graph (BFS/DFS)",
+      "Cycle Detection in Directed Graph (DFS Stack/Kahn's)",
+      "Bipartite Graph Verification (DFS/BFS coloring)",
+      "Topological Sort (DFS Stack method)",
+      "Kahn's Algorithm (Topological Sort BFS Indegree)",
+      "Course Schedule I & II (Deadlocks verification)",
+      "Shortest Path in Unweighted Graph (BFS)",
+      "Shortest Path in DAG (Topo-sort + edge relaxation)",
+      "Dijkstra's Algorithm (Min-Heap / Priority Queue)",
+      "Dijkstra's Algorithm (Set/Tree-Map tracking)",
+      "Shortest Path in Grid / Maze Problems",
+      "Bellman-Ford Algorithm (Relaxation + Negative Cycle Detection)",
+      "Floyd-Warshall Algorithm (All-pairs shortest paths)",
+      "Find City with Smallest Number of Neighbors",
+      "Prim's Algorithm (MST Construction)",
+      "Kruskal's Algorithm (MST via Sorted Edges)",
+      "Disjoint Set Union (DSU) (Union by Rank & Size)",
+      "Disjoint Set Union (DSU) (Path Compression)",
+      "Number of Provinces (DFS/DSU matching)",
+      "Number of Operations to Make Network Connected",
+      "Most Stones Removed with Same Row or Column",
+      "Accounts Merge (DSU application)",
+      "Swimming in Rising Water",
+      "Tarjan's Bridge-Finding Algorithm",
+      "Articulation Points (Cut Vertices)",
+      "Kosaraju's Algorithm (Strongly Connected Components)",
+      "Eulerian Path & Eulerian Circuit",
+      "Hamiltonian Path & Cycle"
+    ],
     problems: [
       { name: "Number of Islands", difficulty: "Medium", link: "https://leetcode.com/problems/number-of-islands/" }
     ],
@@ -161,7 +358,58 @@ const initialNodes = [
     prereqs: ["strings", "graphs"],
     unlocks: [],
     overview: "Optimization through overlapping subproblem caches. Master tabulation, memoization, and knapsack grids.",
-    concepts: ["Memoization vs Tabulation", "0/1 Knapsack Pattern", "Longest Common Subsequence"],
+    concepts: [
+      "Recursion Space Optimization (Memoization vs Tabulation)",
+      "Climbing Stairs (Linear transitions)",
+      "Frog Jump (Min energy optimization)",
+      "Frog Jump with K Distance Steps",
+      "Maximum Sum of Non-Adjacent Elements (House Robber)",
+      "House Robber II (Circular array choice)",
+      "Ninja's Training (State-based action choices)",
+      "Unique Paths on Grid (Matrix combinations count)",
+      "Unique Paths II (Grid with obstacles)",
+      "Minimum Path Sum in Grid",
+      "Minimum Path Sum in Triangular Grid",
+      "Maximum Path Sum in Matrix (Variable start/end)",
+      "Cherry Pickup II (3D DP - two concurrent paths)",
+      "Subset Sum Equals Target",
+      "Partition Equal Subset Sum",
+      "Partition Array Into Two Subsets with Min Difference",
+      "Count Subsets with Sum Equals K",
+      "Count Partitions with Given Difference",
+      "0/1 Knapsack Problem (Space Optimization to 1D Array)",
+      "Coin Change (Fewest coins count)",
+      "Target Sum (Plus/Minus assignments)",
+      "Coin Change II (Unique combinations count)",
+      "Unbounded Knapsack",
+      "Rod Cutting Problem",
+      "Longest Common Subsequence (LCS) (Table construction)",
+      "Print Longest Common Subsequence",
+      "Longest Common Substring",
+      "Longest Palindromic Subsequence",
+      "Minimum insertions to make string palindrome",
+      "Minimum Insertions/Deletions to Convert String A to String B",
+      "Shortest Common Supersequence",
+      "Distinct Subsequences count",
+      "Edit Distance (Insert, Delete, Replace costs)",
+      "Wildcard Matching",
+      "Regular Expression Matching",
+      "Longest Increasing Subsequence (LIS) (DP/Binary Search)",
+      "Print Longest Increasing Subsequence",
+      "Largest Divisible Subset",
+      "Longest String Chain",
+      "Longest Bitonic Subsequence",
+      "Number of Longest Increasing Subsequence",
+      "Matrix Chain Multiplication (MCM)",
+      "Minimum Cost to Cut a Stick",
+      "Burst Balloons",
+      "Evaluate Boolean Expression to True",
+      "Palindrome Partitioning II",
+      "Super Egg Drop",
+      "DP on Trees (House Robber III / Diameter max values)",
+      "Bitmask DP (Assignment / TSP)",
+      "Digit DP (Counting bounds)"
+    ],
     problems: [
       { name: "Coin Change", difficulty: "Medium", link: "https://leetcode.com/problems/coin-change/" }
     ],
@@ -196,6 +444,32 @@ const findCurriculumTopic = (nodeId) => {
     );
   });
 };
+
+// Interactive checkable subtopic element
+function SubtopicItem({ nodeId, sub }) {
+  const storageKey = `completed_sub_${nodeId}_${sub}`;
+  const [isDone, setIsDone] = useState(() => localStorage.getItem(storageKey) === "true");
+  
+  const handleToggle = () => {
+    const nextState = !isDone;
+    localStorage.setItem(storageKey, String(nextState));
+    setIsDone(nextState);
+  };
+
+  return (
+    <div 
+      onClick={handleToggle}
+      className="flex items-center gap-2.5 text-xs text-zinc-300 py-1.5 px-2 rounded hover:bg-zinc-900/60 cursor-pointer transition-colors select-none"
+    >
+      <span className={`text-[13px] font-bold leading-none ${isDone ? "text-accent-emerald" : "text-zinc-700"}`}>
+        ✓
+      </span>
+      <span className={`${isDone ? "text-zinc-400 line-through decoration-zinc-700" : "text-zinc-305"}`}>
+        {sub}
+      </span>
+    </div>
+  );
+}
 
 function Roadmap() {
   const navigate = useNavigate();
@@ -245,7 +519,20 @@ function Roadmap() {
         setTimeout(() => setLoading(false), 300); // Smooth skeleton transition
       }
     };
+    
     fetchProgress();
+
+    // Listen for automatic progress sync updates from extension
+    const handleStorageChange = (e) => {
+      if (e.key === "codement_sync_trigger") {
+        console.log("CodeMent: Extension progress sync detected. Refreshing roadmap progress...");
+        fetchProgress();
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const isLessonCompleted = (lesson) => {
@@ -960,84 +1247,18 @@ function Roadmap() {
                                 </p>
                               </div>
 
-                              {/* Curriculum Accordion Structure */}
+                              {/* Subtopics Section */}
                               <div className="space-y-2">
-                                <span className="text-[9px] font-mono text-zinc-555 uppercase tracking-widest block font-bold">Curriculum Structure</span>
-                                
-                                {fullTopic.modules && fullTopic.modules.length > 0 ? (
-                                  <div className="space-y-2">
-                                    {fullTopic.modules.map((module) => {
-                                      const isExpanded = expandedModuleId === module.id;
-                                      const lessonsCount = module.lessons?.length || 0;
-                                      const completedCount = module.lessons?.filter(l => isLessonCompleted(l)).length || 0;
-                                      const progressPercent = lessonsCount > 0 ? Math.round((completedCount / lessonsCount) * 100) : 0;
-
-                                      return (
-                                        <div key={module.id} className="rounded-xl border border-zinc-855 bg-zinc-900/30 overflow-hidden">
-                                          <button
-                                            onClick={() => setExpandedModuleId(isExpanded ? null : module.id)}
-                                            className="w-full flex items-center justify-between p-3.5 hover:bg-zinc-900/40 text-left transition-all outline-none focus-visible:ring-1 focus-visible:ring-accent-cyan cursor-pointer"
-                                          >
-                                            <div className="space-y-0.5 flex-1 pr-4">
-                                              <div className="flex justify-between items-center text-xs font-semibold text-zinc-200">
-                                                <span className="truncate max-w-[150px]">{module.title}</span>
-                                                {lessonsCount > 0 && (
-                                                  <span className="text-[9px] font-mono text-zinc-500 font-normal">
-                                                    {completedCount}/{lessonsCount} Lessons
-                                                  </span>
-                                                )}
-                                              </div>
-                                              <div className="flex items-center justify-between text-[8px] font-mono text-zinc-555">
-                                                <span>EST: {module.estimatedTime || module.duration || "40m"} • {module.difficulty || "Easy"}</span>
-                                                <span>{progressPercent}% Done</span>
-                                              </div>
-                                            </div>
-                                            <span className="text-zinc-500 text-[10px]">
-                                              {isExpanded ? "▲" : "▼"}
-                                            </span>
-                                          </button>
-
-                                          <motion.div
-                                            initial={false}
-                                            animate={{ height: isExpanded ? "auto" : 0 }}
-                                            transition={{ height: { duration: shouldReduceMotion ? 0 : 0.2 }, opacity: { duration: shouldReduceMotion ? 0 : 0.15 } }}
-                                            className="overflow-hidden"
-                                          >
-                                            <div className="p-2.5 bg-zinc-950/40 border-t border-zinc-900/60 space-y-1.5 max-h-48 overflow-y-auto">
-                                              {module.lessons?.map((lesson) => {
-                                                const completed = isLessonCompleted(lesson);
-                                                return (
-                                                  <button
-                                                    key={lesson.id}
-                                                    onClick={() => setActiveLesson(lesson)}
-                                                    className="w-full text-left p-2 rounded-lg border border-zinc-900 bg-zinc-950/60 flex items-center justify-between text-[11px] font-sans hover:border-zinc-800 transition-colors cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-accent-cyan"
-                                                  >
-                                                    <div className="space-y-0.5">
-                                                      <div className="font-semibold text-zinc-350">{lesson.title}</div>
-                                                      <div className="font-mono text-[8px] text-zinc-555">
-                                                        {lesson.estimatedDuration || lesson.duration || "20m"} • {lesson.difficulty || "Easy"}
-                                                      </div>
-                                                    </div>
-                                                    
-                                                    {completed ? (
-                                                      <span className="w-2 h-2 rounded-full bg-accent-emerald"></span>
-                                                    ) : (
-                                                      <span className="w-2 h-2 rounded-full bg-zinc-800"></span>
-                                                    )}
-                                                  </button>
-                                                );
-                                              })}
-                                            </div>
-                                          </motion.div>
-                                        </div>
-                                      );
-                                    })}
-                                  </div>
-                                ) : (
-                                  <div className="p-3.5 rounded-lg border border-dashed border-zinc-850 text-center text-[10px] text-zinc-650 font-sans">
-                                    No learning modules populated in database yet.
-                                  </div>
-                                )}
+                                <span className="text-[9px] font-mono text-zinc-555 uppercase tracking-widest block font-bold">Subtopics</span>
+                                <div className="space-y-1 bg-zinc-900/20 p-3 rounded-xl border border-zinc-900/60 max-h-[220px] overflow-y-auto">
+                                  {selectedNode.concepts && selectedNode.concepts.map((sub, sIdx) => (
+                                    <SubtopicItem 
+                                      key={sIdx} 
+                                      nodeId={selectedNode.id} 
+                                      sub={sub} 
+                                    />
+                                  ))}
+                                </div>
                               </div>
 
                               {/* Practice Problems */}

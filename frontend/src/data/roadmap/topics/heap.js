@@ -1,33 +1,56 @@
 const heap = {
   id: 19,
   topicId: "heap",
-  title: "Heaps & Priority Queues",
-  description: "Complete binary trees tracking maximum or minimum elements. Study heapify operations, insertion bubbles, and top-K filters.",
+  title: "Heap / Priority Queue",
+  description: "Learn binary heap structures, dynamic max/min extraction, K-way merges, and Top K sorting.",
   estimatedTime: "5 Hours",
   difficulty: "Medium",
   prerequisites: ["tree"],
-  learningObjectives: ["Understand heap index array models", "Trace priority queue filters"],
+  learningObjectives: [
+    "Perform dynamic min/max element extractions in O(log N) runtime",
+    "Identify Top K elements in collections in O(N log K) time using min-heaps"
+  ],
+  concepts: ["Min Heap", "Max Heap", "Heapification"],
   modules: [
     {
-      id: "mod-heap-ops",
-      title: "Binary Heap Operations",
+      id: "mod-heap-basics",
+      title: "Priority Ordering",
       order: 1,
-      shortDescription: "Insert, delete, and heapify binary array trees.",
-      estimatedTime: "60 Mins",
+      shortDescription: "Master sorting indices dynamically using min/max arrays.",
+      estimatedTime: "120 Mins",
       difficulty: "Medium",
       lessons: [
         {
-          id: "lesson-heapify-down",
-          title: "Heapify-Down array mutations",
-          learningObjective: "Restore heap order constraints in logarithmic complexity O(log N).",
-          estimatedDuration: "25 Mins",
+          id: "lesson-heap-topk",
+          title: "Top K Elements",
+          learningObjective: "Locate K largest elements in collections in O(N log K) time.",
+          estimatedDuration: "30 Mins",
           difficulty: "Medium",
           prerequisiteLessons: [],
-          conciseExplanationPlaceholder: "Bubble elements down array branches, swapping with the larger child node index.",
-          implementationTipsPlaceholder: ["Map children indexes as: left = 2*i + 1, right = 2*i + 2"],
-          commonMistakesPlaceholder: ["OutOfBounds index exceptions on child checks"],
+          conciseExplanationPlaceholder: "Heaps maintain hierarchical priority order. A min-heap root stores the smallest item. To find the top K largest values, iterate through the list and push elements onto a min-heap of size K. If heap size exceeds K, pop the root. The heap will contain exactly the K largest elements.",
+          implementationTipsPlaceholder: [
+            "Use min-heaps for 'largest' queries, and max-heaps for 'smallest' queries",
+            "Heapify input arrays in-place in O(N) rather than O(N log N) item-by-item insertions"
+          ],
+          commonMistakesPlaceholder: [
+            "Storing all elements in the heap, causing O(N log N) time and O(N) space.",
+            "Incorrectly index child nodes in array-based binary trees."
+          ],
           linkedPracticeProblems: [
-            { id: "hp1", title: "Kth Largest Element in an Array", difficulty: "Medium", pattern: "Heap / Sorting", link: "https://leetcode.com/problems/kth-largest-element-in-an-array/" }
+            {
+              id: 1901,
+              title: "Kth Largest Element in an Array",
+              difficulty: "Medium",
+              pattern: "Min Heap",
+              link: "https://leetcode.com/problems/kth-largest-element-in-an-array/"
+            },
+            {
+              id: 1902,
+              title: "Find Median from Data Stream",
+              difficulty: "Hard",
+              pattern: "Two Heaps",
+              link: "https://leetcode.com/problems/find-median-from-data-stream/"
+            }
           ],
           completionState: false
         }

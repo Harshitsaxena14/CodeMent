@@ -1,36 +1,38 @@
 {
   "manifest_version": 3,
-
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC+0rk/O61e9SspdpMOHA8hwVQjq0SOz9tO2gONiZAwSyvcJDxD3XmY/fUkUFo6ccNQgcegHxAlxYgKYtqibc5CC9wMc6Eir2CihA1fE12dZmd7mN9OXJrzyMB09OhmdUCz5CJ3Gsh/yHFX+0MBz9D9ndMlVdqhVsZ+b3P/z/X3QQIDAQAB",
   "name": "CodeMent",
-
   "version": "1.0",
-
   "description": "DSA mentor for LeetCode",
-
-  "permissions":[
+  "permissions": [
     "activeTab",
     "storage",
-     "tabs"
-    ],
-
-
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://localhost/*"
+  ],
   "action": {
     "default_popup": "popup.html"
   },
-
-
   "content_scripts": [
-
     {
       "matches": [
-        "https://leetcode.com/problems/*"
+        "https://leetcode.com/problems/*",
+        "http://localhost/*"
       ],
-
       "js": [
         "content.js"
       ]
+    },
+    {
+      "matches": [
+        "http://localhost/*"
+      ],
+      "js": [
+        "webContent.js"
+      ]
     }
-
   ]
-
 }

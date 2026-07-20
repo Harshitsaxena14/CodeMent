@@ -1,33 +1,49 @@
 const numbertheory = {
   id: 25,
-  topicId: "number-theory",
+  topicId: "numbertheory",
   title: "Number Theory",
-  description: "Divisibility, modular arithmetic, and prime validations. Master GCD algorithms, Sieve of Eratosthenes, and modular exponents.",
+  description: "Learn modular arithmetic, GCD (Euclidean), prime factorization, and prime generation sieve models.",
   estimatedTime: "4 Hours",
   difficulty: "Medium",
   prerequisites: ["basics"],
-  learningObjectives: ["Verify prime values efficiently", "Trace Sieve loops"],
+  learningObjectives: [
+    "Generate primes up to limit N in O(N log log N) time using Sieve of Eratosthenes",
+    "Calculate Greatest Common Divisors recursively in logarithmic O(log min(A, B)) time"
+  ],
+  concepts: ["Sieve of Eratosthenes", "Euclidean GCD", "Modular Exponentiation"],
   modules: [
     {
-      id: "mod-number-theory-primes",
-      title: "Prime Index Mappings",
+      id: "mod-numbertheory-basics",
+      title: "Prime Numbers & GCD",
       order: 1,
-      shortDescription: "Fundamentals of prime number filters.",
-      estimatedTime: "60 Mins",
-      difficulty: "Medium",
+      shortDescription: "Calculate mathematical boundaries and divisors.",
+      estimatedTime: "120 Mins",
+      difficulty: "Easy",
       lessons: [
         {
-          id: "lesson-sieve-eratosthenes",
-          title: "Sieve of Eratosthenes",
-          learningObjective: "Generate all prime numbers up to boundary N in O(N log log N) complexity.",
+          id: "lesson-numbertheory-sieve",
+          title: "Prime Sieve & Divisors",
+          learningObjective: "Generate all primes up to N in O(N log log N) time using Eratosthenes Sieve.",
           estimatedDuration: "25 Mins",
           difficulty: "Easy",
           prerequisiteLessons: [],
-          conciseExplanationPlaceholder: "Create a boolean array. Mark multiples of prime inputs as composite indices recursively.",
-          implementationTipsPlaceholder: ["Start marking multiples from index i * i instead of 2 * i"],
-          commonMistakesPlaceholder: ["OutOfBounds index bounds allocations on large limit variables"],
+          conciseExplanationPlaceholder: "The Sieve of Eratosthenes generates primes up to N. Maintain a boolean array. Start at index 2, and mark all its multiples as composite. Move to the next prime, and mark its multiples. Stop when the index exceeds sqrt(N). The remaining unmarked indices are prime.",
+          implementationTipsPlaceholder: [
+            "Initialize the composite array up to index N + 1",
+            "Optimize loops by starting composite marks at i * i"
+          ],
+          commonMistakesPlaceholder: [
+            "Iterating past sqrt(N) inside composite marking loops, causing duplicate checks.",
+            "Incorrectly handle base values 0 and 1, which are non-prime."
+          ],
           linkedPracticeProblems: [
-            { id: "nt1", title: "Count Primes", difficulty: "Medium", pattern: "Number Theory", link: "https://leetcode.com/problems/count-primes/" }
+            {
+              id: 2501,
+              title: "Count Primes",
+              difficulty: "Medium",
+              pattern: "Sieve Eratosthenes",
+              link: "https://leetcode.com/problems/count-primes/"
+            }
           ],
           completionState: false
         }
